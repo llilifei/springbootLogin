@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.longshare.login_demo.dao.UserDao">
+    <sql id="Colum_all">
+        username,
+        password,
+        gender,
+        birthday,
+        mobile,
+        email
+    </sql>
+    <resultMap id="ListTest" type="User">
+        <id column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="gender" property="gender"/>
+        <result column="birthday" property="birthday"/>
+        <result column="mobile" property="mobile"/>
+        <result column="email" property="email"/>
+    </resultMap>
+
+    <select id="selectOneUser" parameterType="User" resultMap="ListTest">
+        SELECT
+        <include refid="Colum_all"/>
+        FROM user
+        WHERE username=#{username}
+    </select>
+    <insert id="add" parameterType="User">
+        INSERT INTO
+         user
+        (<include refid="Colum_all"/>)
+         VALUES (#{username},
+                #{password},
+                #{gender},
+                #{birthday},
+                #{mobile},
+                #{email} )
+    </insert>
+</mapper>
